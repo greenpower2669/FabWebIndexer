@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Téléchargement de fichiers et export CSV</title>
+</head>
+<body>
+    <input type="file" id="fileInput" multiple accept="image/*,video/mp4">
+    <button onclick="genererCSV()">Générer CSV</button>
+
+    <script>
+        function genererCSV() {
+            const input = document.getElementById('fileInput');
+            const fichiers = input.files;
+            if (fichiers.length === 0) {
+                alert('Veuillez sélectionner au moins un fichier.');
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Nom du fichier,Type de fichier,Taille du fichier (bytes)\r\n";
+
+            Array.from(fichiers).forEach(fichier => {
+                csvContent += `${fichier.name},${fichier.type},${fichier.size}\r\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "infos_fichiers.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

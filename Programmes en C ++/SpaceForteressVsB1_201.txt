@@ -1,0 +1,2 @@
+SpaceFortressVsB1 : https://github.com/greenpower2669/SpaceFortressVs
+Un petit jeu qui se joue avec 4 touches tactiles. Ici, vous esquivez les tirs de l'ennemi, ses tourelles de défense et les astéroïdes. Vous minez les astéroïdes et collectez les particules blanches pour vous recharger. Si vous gérez bien, alors 100% d'énergie sur les boucliers permettent le lancement d'un missile.

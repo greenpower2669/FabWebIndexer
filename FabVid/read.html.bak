@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Media Wall with Posters</title>
+<style>
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  img, video {
+    width: 150px; /* Adjust the size as needed */
+    height: auto;
+  }
+</style>
+</head>
+<body>
+
+<h2>Dynamic Media Wall from CSV with Video Posters</h2>
+<div class="gallery" id="mediaGallery"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const imagePaths = {}; // Store image paths for use as video posters
+
+  fetch('assets/files.csv')
+    .then(response => response.text())
+    .then(data => {
+      const rows = data.split('\n');
+      rows.forEach(row => {
+        const columns = row.split(',');
+        const filePath = columns[0]; // Assuming file path is in the first column
+        const fileType = filePath.split('.').pop();
+        const baseName = filePath.substring(0, filePath.lastIndexOf('.'));
+
+        // Collect image paths first
+        if (!fileType.startsWith('mp4')) {
+          imagePaths[baseName] = filePath;
+        }
+      });
+
+      // Now create media elements
+      rows.forEach(row => {
+        const columns = row.split(',');
+        const filePath = columns[0];
+        const fileType = filePath.split('.').pop();
+        const baseName = filePath.substring(0, filePath.lastIndexOf('.'));
+        const container = document.getElementById('mediaGallery');
+
+        if (fileType.startsWith('mp4')) {
+          const mediaElement = document.createElement('video');
+          mediaElement.controls = true;
+
+          const source = document.createElement('source');
+          source.src = filePath;
+          source.type = 'video/mp4';
+          mediaElement.appendChild(source);
+
+          // Set the poster if it exists
+          if (imagePaths[baseName]) {
+            mediaElement.poster = imagePaths[baseName];
+          }
+
+          container.appendChild(mediaElement);
+        } else {
+          const mediaElement = document.createElement('img');
+          mediaElement.src = filePath;
+          mediaElement.alt = 'Image';
+          container.appendChild(mediaElement);
+        }
+      });
+    })
+    .catch(error => console.error('Error loading the CSV file:', error));
+});
+</script>
+
+</body>
+</html>

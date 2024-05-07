@@ -1,0 +1,4 @@
+
+FabDoubleFinder: https://github.com/greenpower2669/FabDoubleFinder
+
+Programme sous Windows pour trouver les doublons dans plusieurs répertoires avec un réglage de la ressource CPU autorisée (le code source est dans le fichier texte). Cliquez sur l'image pour obtenir le fichier compressé ou l'application mobile !
